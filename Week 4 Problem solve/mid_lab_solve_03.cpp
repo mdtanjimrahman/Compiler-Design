@@ -1,9 +1,10 @@
-#include<bits/stdc++.h>
+#include<bits/stdc++.h>  //universal header, used STL
 using namespace std;
 
 void keywordCheck()
 {
-    // C++ keywords (used CHATGPT to generate keywords to be honest)
+    // C++ keywords (used GOOGLE for searching all keywords)
+    // declared an unordered_set named "keywords" that store element type string
     unordered_set<string> keywords =
                 {   "int", "float", "double", "char", "if", "else", "switch", "case",
                      "for", "while", "do", "return", "void", "bool", "const", "enum",
@@ -15,97 +16,116 @@ void keywordCheck()
                      "unsigned", "short", "long"
                 };
 
-    string input;
+
+
+
+    string input;  // variable to store user input
+
+
+
+    // getline to read entire line of text from the user (cin) into the string 'input'
+    // allows user input to use spaces in the string
     cout << "Enter a string: ";
     getline(cin, input);
     cout<<"\n";
 
-    int wordCount = 0;
-    bool inWord = false;
 
-    for (char ch : input)
+
+
+    int wordCount = 0;  //counter variable to keep track of number of words
+    bool inWord = false; //flag to indicate whether currently inside a word
+
+
+    for (char ch : input) //iterating each character in the input string over and over again
         {
-            if (isspace(ch))
+            if (isspace(ch)) // checks the current character is whitespace or not
             {
-                if (inWord)
+                if (inWord) // checks if currently inside a word
                 {
-                    ++wordCount;
-                    inWord = false;
+                    ++wordCount; //if reached the end of the word, increment the word counter
+                    inWord = false; //set inWord flag to false, when no longer inside a word
                 }
             }
             else
                 {
-                    inWord = true;
+                    inWord = true; //current character is not a whitespace, so still inside a word. Flag to true
                 }
         }
 
-        if (inWord)
+
+    if (inWord)
+        {
+            ++wordCount; //after loop ends, if still inside a word, increment the word counter
+        }
+
+
+
+    string* words = new string[wordCount]; //pointer to allocate array of strings to store the words
+                                           //array size = the number of words counted
+
+
+    int index = 0;  //index variable to keep track of the position in 'words' array
+    string word = "";  //an empty string to collect character one by one to build a word. This works as a container
+
+
+
+    for (char ch : input)
+        {
+            if (isspace(ch)) // checks the current character is whitespace or not
             {
-                ++wordCount;
+                if (!word.empty()) //if current word is not empty, reached the end of the word
+                {
+                    words[index++] = word; //store the current word in the 'words' array at next index
+                    word = ""; //reset the 'word' string to initial state
+                }
+            }
+            else
+            {
+                word += ch; //if the current character is not whitespace, add it to empty 'word' string
+            }
+        }
+
+        if (!word.empty()) //if current word is not empty, reached the end of the word
+            {
+                words[index++] = word; //store the current word in the 'words' array at next index
             }
 
 
 
-            string* words = new string[wordCount];
-
-
-            int index = 0;
-            string word = "";
-            for (char ch : input)
+            bool foundKeywords = false; //bool variable to check if keywords are found or not, initially flase
+            for (int i = 0; i < wordCount; ++i) // loop through each word in the 'words' array
                 {
-                    if (isspace(ch))
+                    if (keywords.find(words[i]) != keywords.end()) //if the current word is a keyword by looking it up in the 'keywords' set
                     {
-                        if (!word.empty())
+                        if (!foundKeywords) //if the keyword is found, print "Keywords found: " and setting bool value to true.
                         {
-                            words[index++] = word;
-                            word = "";
+                            cout << "Keywords found: ";
+                            foundKeywords = true;
                         }
-                    }
-                    else
-                    {
-                        word += ch;
+                    cout << words[i] << " ";
                     }
                 }
 
-                if (!word.empty())
+
+                if (!foundKeywords) //if no keywords are found, print "No keywords found"
                     {
-                        words[index++] = word;
+                        cout << "No keywords found" << endl;
+                    }
+                else
+                    {
+                        cout << endl;
                     }
 
-
-                    bool foundKeywords = false;
-                    for (int i = 0; i < wordCount; ++i)
-                        {
-                            if (keywords.find(words[i]) != keywords.end())
-                            {
-                                if (!foundKeywords)
-                                {
-                                    cout << "Keywords found: ";
-                                    foundKeywords = true;
-                                }
-                            cout << words[i] << " ";
-                            }
-                        }
-
-
-                        if (!foundKeywords)
-                            {
-                                cout << "No keywords found" << endl;
-                            }
-                        else
-                            {
-                                cout << endl;
-                            }
-
-                            delete[] words;
-                            return;
-
-
+                    delete[] words; // Delete the allocated array to free memory
+                    return;
 }
+
+
 
 
 int main()
 {
-    keywordCheck();
+    keywordCheck(); //calls the whole function to execute
     return 0;
 }
+
