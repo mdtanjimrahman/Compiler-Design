@@ -1,18 +1,24 @@
-////Write a program that takes user input (string) and shows......
-//if any KEYWORDS are present in the sentence
-
 #include<bits/stdc++.h>
-#include<unordered_set>
-
 using namespace std;
 
-int main() {
-
-    unordered_set<string> keywords = {"int", "float", "double", "char", "if", "else", "switch", "case", "for", "while", "do", "return"};
+void keywordCheck()
+{
+    // C++ keywords (used CHATGPT to generate keywords to be honest)
+    unordered_set<string> keywords =
+                {   "int", "float", "double", "char", "if", "else", "switch", "case",
+                     "for", "while", "do", "return", "void", "bool", "const", "enum",
+                     "struct", "class", "public", "private", "protected", "virtual",
+                     "override", "static", "inline", "namespace", "using", "typedef",
+                     "template", "typename", "new", "delete", "this", "friend", "operator",
+                     "sizeof", "try", "catch", "throw", "default", "break", "continue",
+                     "goto", "extern", "volatile", "mutable", "register", "signed",
+                     "unsigned", "short", "long"
+                };
 
     string input;
     cout << "Enter a string: ";
     getline(cin, input);
+    cout<<"\n";
 
     int wordCount = 0;
     bool inWord = false;
@@ -61,38 +67,42 @@ int main() {
             }
         }
 
-    if (!word.empty())
-        {
-            words[index++] = word;
-        }
-
-
-    bool foundKeywords = false;
-    for (int i = 0; i < wordCount; ++i)
-        {
-            if (keywords.find(words[i]) != keywords.end())
+        if (!word.empty())
             {
-                if (!foundKeywords)
-                {
-                    cout << "Keywords found in the string: ";
-                    foundKeywords = true;
-                }
-            cout << words[i] << " ";
+                words[index++] = word;
             }
-        }
 
 
-    if (!foundKeywords)
-        {
-            cout << "No keywords found in the string." << endl;
-        }
-    else
-        {
-            cout << endl;
-        }
+            bool foundKeywords = false;
+            for (int i = 0; i < wordCount; ++i)
+                {
+                    if (keywords.find(words[i]) != keywords.end())
+                    {
+                        if (!foundKeywords)
+                        {
+                            cout << "Keywords found: ";
+                            foundKeywords = true;
+                        }
+                    cout << words[i] << " ";
+                    }
+                }
 
 
-    delete[] words;
+                if (!foundKeywords)
+                    {
+                        cout << "No keywords found" << endl;
+                    }
+                else
+                    {
+                        cout << endl;
+                    }
 
+                    delete[] words;
+                    return;
+}
+
+int main()
+{
+    keywordCheck();
     return 0;
 }

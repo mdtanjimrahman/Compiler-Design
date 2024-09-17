@@ -17,14 +17,33 @@ bool isAlpha(char c)
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 
-// deleting initial and end whitespace. Searched google and found this kind of function on stack_overflow
+
+
+
+// deleting initial and end whitespace. Searched google and got a few help with syntax
 string trim(const string& str)
 {
-    size_t first = str.find_first_not_of(" \t\n\r");
-    if (first == string::npos) return "";
-    size_t last = str.find_last_not_of(" \t\n\r");
+    int first = 0;
+    int last = str.length() - 1;
+
+    // Find the first non-whitespace character
+    while (first <= last && isspace(str[first]))
+    {
+        first++;
+    }
+
+    // Find the last non-whitespace character
+    while (last >= first && isspace(str[last]))
+    {
+        last--;
+    }
+
+    // Return the substring from first to last inclusive
     return str.substr(first, last - first + 1);
 }
+
+
+
 
 // C++ keywords (used CHATGPT to generate keywords to be honest)
 const char* keywords[] =
@@ -111,15 +130,15 @@ bool isBool(const string& str)
 
 
 
-// check if a variable declare is valid (Also googled it found this function from chegg)
+// check if a variable declare is valid.....got a bit help from my friend
 
 bool isValidVariableDeclaration(const string& declaration) {
     string trimming = trim(declaration);
 
-    // Check if the declaration ends with a semicolon
+    // Check if ends with semicolon
     if (trimming.back() != ';') return false;
 
-    // Remove the semicolon
+    // Remove semicolon
     trimming.pop_back();
 
     size_t firstSpace = trimming.find(' ');
@@ -163,7 +182,7 @@ bool isValidVariableDeclaration(const string& declaration) {
             }
         else
             {
-                return false; // Unsupported data type
+                return false; // unsupported data type
             }
 
     return true;

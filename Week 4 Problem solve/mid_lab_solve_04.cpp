@@ -184,7 +184,6 @@ bool isValidVariableDeclaration(const string& declaration) {
             }
 
     return true;
-
 }
 
 
